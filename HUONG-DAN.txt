@@ -1,0 +1,18 @@
+CÁCH XUẤT BẢN APP HỌC HSK 1
+
+Giữ nguyên cấu trúc thư mục: index.html, thư mục audio/ (file nghe), manifest.webmanifest, sw.js, các icon.
+
+Cách nhanh nhất – Netlify Drop (miễn phí, không cần biết lập trình):
+ 1. Giải nén file zip này ra một thư mục.
+ 2. Mở https://app.netlify.com/drop trên máy tính.
+ 3. Kéo cả THƯ MỤC vừa giải nén thả vào trang.
+ 4. Đợi tải lên xong, Netlify cho bạn một đường link https://….netlify.app – gửi link đó cho mọi người.
+ 5. Đăng ký tài khoản Netlify (miễn phí) để giữ link lâu dài và đổi tên link.
+
+Cài như ứng dụng trên điện thoại: mở link bằng Safari (iPhone) → Chia sẻ → “Thêm vào MH chính”;
+hoặc Chrome (Android) → menu ⋮ → “Cài đặt ứng dụng / Thêm vào màn hình chính”.
+
+Lưu ý:
+ - Tiến độ học lưu trong trình duyệt của từng người (không đồng bộ giữa các máy).
+ - Nút “Claude chấm chi tiết” chỉ có khi mở app bên trong Claude; ở link riêng, phần chấm nhanh vẫn hoạt động.
+ - File nghe là của bộ sách giáo trình/sách bài tập: chỉ nên chia sẻ cho người học có sách, không đăng công khai đại trà.
