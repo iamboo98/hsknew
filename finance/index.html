@@ -165,6 +165,13 @@ nav.tabs .fab svg{width:26px;height:26px}
 .budget-row:last-child{border-bottom:0}
 .budget-row input{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:7px 10px;text-align:right;width:100%}
 .settings-list .btn{margin-bottom:8px}
+.save-state{font-weight:600;color:var(--income)}.save-state.err{color:var(--expense)}
+.data-info{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px;background:var(--surface-2);border-radius:12px;padding:10px 12px;margin-bottom:12px}
+.data-info b{text-align:right;font-weight:600}
+.flash-card{animation:hl 1.6s ease}
+.ask-scrim{z-index:80}
+.backup-tip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 12px}
+.backup-tip span{flex:1;min-width:180px}
 .small{font-size:12px;color:var(--muted)}
 .mt{margin-top:14px}
 </style>
@@ -172,7 +179,8 @@ nav.tabs .fab svg{width:26px;height:26px}
 <body>
 <header class="top"><div class="top-in">
   <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0f766e"/><path d="M14 22a6 6 0 0 1 6-6h22a4 4 0 0 1 4 4v4H20a2 2 0 0 0 0 4h30a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4H20a6 6 0 0 1-6-6z" fill="#fff"/><circle cx="44" cy="38" r="4" fill="#0f766e"/></svg>Ví Của Tôi</div>
-  <div class="live" title="Dữ liệu tự lưu và đồng bộ giữa các tab"><span class="dot" id="liveDot"></span><span id="clock" class="num">--:--:--</span></div>
+  <div class="live" title="Dữ liệu tự lưu ngay sau mỗi lần nhập và đồng bộ giữa các tab"><span class="dot" id="liveDot"></span><span class="save-state" id="saveState">Đã lưu</span><span>·</span><span id="clock" class="num">--:--:--</span></div>
+  <button class="icon-btn" id="dataBtn" aria-label="Sao lưu và khôi phục dữ liệu" title="Sao lưu / Khôi phục"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4-4m4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></button>
   <button class="icon-btn" id="themeBtn" aria-label="Đổi giao diện sáng/tối"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
 </div></header>
 
@@ -184,6 +192,7 @@ nav.tabs .fab svg{width:26px;height:26px}
       <h2 class="mlabel"></h2>
       <button class="icon-btn" data-mnav="1" aria-label="Tháng sau"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button>
     </div>
+    <div id="backupTip"></div>
     <div class="card hero">
       <div class="lbl">Số dư khả dụng</div>
       <div class="big num" id="balance">0 ₫</div>
@@ -243,12 +252,13 @@ nav.tabs .fab svg{width:26px;height:26px}
     <p class="small" style="margin:0 0 12px">Đặt hạn mức cho từng danh mục chi. Để trống nếu không giới hạn. Áp dụng cho mọi tháng.</p>
     <div class="card"><div id="budgetList"></div>
       <div style="display:flex;justify-content:space-between;margin-top:10px;font-weight:600"><span>Tổng ngân sách</span><span class="num" id="budgetTotal">0</span></div></div>
-    <h2 style="margin:22px 0 10px;font-size:18px">Dữ liệu</h2>
-    <div class="card settings-list">
-      <p class="small" style="margin-top:0">Dữ liệu được lưu ngay trên thiết bị này (không gửi đi đâu) và tự đồng bộ tức thì giữa các tab đang mở. Hãy xuất file sao lưu thường xuyên.</p>
-      <button class="btn full" id="exportJson">⬇️ Xuất sao lưu (.json)</button>
+    <h2 style="margin:22px 0 10px;font-size:18px" id="dataSec">Sao lưu & khôi phục</h2>
+    <div class="card settings-list" id="dataCard">
+      <p class="small" style="margin-top:0">Mỗi lần bạn thêm, sửa hay xóa, dữ liệu được <b>lưu ngay</b> vào trình duyệt trên thiết bị này (không gửi đi đâu). Tải file sao lưu về máy để giữ an toàn hoặc chuyển sang thiết bị khác, rồi tải lên lại khi cần.</p>
+      <div class="data-info" id="dataInfo"></div>
+      <button class="btn full pri" id="exportJson">⬇️ Tải bản sao lưu về máy (.json)</button>
       <button class="btn full" id="exportCsv">📄 Xuất giao dịch (.csv – mở bằng Excel)</button>
-      <label class="btn full" style="display:block;text-align:center">⬆️ Nhập từ file sao lưu<input type="file" id="importFile" accept="application/json,.json" hidden></label>
+      <label class="btn full" style="display:block;text-align:center">⬆️ Tải lên file sao lưu để khôi phục<input type="file" id="importFile" accept="application/json,.json" hidden></label>
       <button class="btn full" id="demoBtn">✨ Tạo dữ liệu mẫu để dùng thử</button>
       <button class="btn full danger" id="resetBtn">🗑️ Xóa toàn bộ dữ liệu</button>
     </div>
@@ -295,10 +305,20 @@ function load(){
   try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && Array.isArray(s.tx)) return Object.assign(blank(), s); } catch(e){}
   return blank();
 }
+function setSaveState(ok){
+  const el = document.getElementById('saveState'); if (!el) return;
+  el.textContent = ok ? 'Đã lưu' : '⚠️ Chưa lưu'; el.classList.toggle('err', !ok);
+  el.title = ok ? 'Đã lưu lúc ' + new Date().toLocaleTimeString('vi-VN') : 'Trình duyệt không cho lưu – hãy tải bản sao lưu';
+}
+const meta = {
+  get(){ try { return JSON.parse(localStorage.getItem(KEY+':meta')) || {}; } catch(e){ return {}; } },
+  set(o){ try { localStorage.setItem(KEY+':meta', JSON.stringify({...meta.get(), ...o})); } catch(e){} }
+};
 const bc = ('BroadcastChannel' in window) ? new BroadcastChannel(KEY) : null;
 function save(){
   S.updated = Date.now();
-  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){ toast('Không lưu được – bộ nhớ trình duyệt bị chặn hoặc đầy'); }
+  try { localStorage.setItem(KEY, JSON.stringify(S)); setSaveState(true); }
+  catch(e){ setSaveState(false); toast('⚠️ Không lưu được – bộ nhớ trình duyệt bị chặn hoặc đầy. Hãy tải bản sao lưu về máy.'); }
   if (bc) bc.postMessage({t:'sync', at:S.updated});
   render();
 }
@@ -379,7 +399,7 @@ function goalInfo(g){
 /* ---------- render ---------- */
 function render(){
   $$('.mlabel').forEach(e => e.textContent = monthLabel(ui.month));
-  renderHome(); renderTx(); renderGoals(); renderBudget();
+  renderHome(); renderTx(); renderGoals(); renderBudget(); renderData();
 }
 
 function renderHome(){
@@ -710,9 +730,9 @@ function goalSheet(g){
       if (g) S.goals[S.goals.findIndex(x=>x.id===g.id)] = rec; else S.goals.push(rec);
       closeSheet(); save(); toast(g ? 'Đã lưu mục tiêu' : 'Đã tạo mục tiêu “' + name + '”');
     });
-    g && root.querySelector('#fDel').addEventListener('click', () => {
+    g && root.querySelector('#fDel').addEventListener('click', async () => {
       const saved = goalSaved(g.id);
-      if (!confirm(`Xóa mục tiêu “${g.name}”?` + (saved ? `\nSố tiền đã để dành (${money(saved)}) sẽ được trả lại vào số dư khả dụng.` : ''))) return;
+      if (await ask(`Xóa mục tiêu “${esc(g.name)}”?`, saved ? `Số tiền đã để dành (${money(saved)}) sẽ được trả lại vào số dư khả dụng.` : '', 'Xóa', {danger:true}) !== 'ok') return;
       const removedTx = S.tx.filter(x => x.goalId === g.id);
       S.goals = S.goals.filter(x=>x.id!==g.id); S.tx = S.tx.filter(x => x.goalId !== g.id);
       closeSheet(); save();
@@ -767,6 +787,7 @@ document.addEventListener('click', e => {
   else if (t.dataset.editgoal) goalSheet(S.goals.find(g=>g.id===t.dataset.editgoal));
   else if (t.dataset.act === 'newGoal') goalSheet();
   else if (t.dataset.act === 'newTx') txSheet();
+  else if (t.dataset.act === 'backup') exportBackup();
   else if (t.hasAttribute('data-close')) closeSheet();
 });
 $('#fab').addEventListener('click', () => ui.view === 'goals' ? (S.goals.length ? contribSheet(S.goals[0], false) : goalSheet()) : txSheet());
@@ -795,10 +816,43 @@ async function download(name, text, type){
   if (window.claude && typeof window.claude.use === 'function'){
     dlP ||= window.claude.use('downloads').catch(() => null);
     const dl = await dlP;
-    if (dl){ try { await dl.save({filename: name, data: text}); toast('Đã lưu ' + name); } catch(err){ if (err && err.code !== 'declined') toast('Không lưu được file ở đây'); } return; }
+    if (dl){ try { await dl.save({filename: name, data: text}); toast('✅ Đã tải ' + name); return true; } catch(err){ if (err && err.code !== 'declined') toast('Không tải được file ở đây'); return false; } }
   }
-  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], {type})); a.download = name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href), 1000); }
-$('#exportJson').addEventListener('click', () => download(`vi-cua-toi-${today()}.json`, JSON.stringify(S, null, 1), 'application/json'));
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], {type})); a.download = name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href), 1000); toast('✅ Đã tải ' + name); return true; }
+function stamp(){ const d = new Date(); return today() + '-' + pad(d.getHours()) + pad(d.getMinutes()); }
+function ago(t){
+  if (!t) return 'chưa có';
+  const m = Math.round((Date.now() - t) / 6e4);
+  if (m < 1) return 'vừa xong'; if (m < 60) return m + ' phút trước';
+  const h = Math.round(m / 60); if (h < 24) return h + ' giờ trước';
+  return Math.round(h / 24) + ' ngày trước (' + new Date(t).toLocaleDateString('vi-VN') + ')';
+}
+function renderData(){
+  const md = meta.get(), stale = S.tx.length && (!md.lastBackup || Date.now() - md.lastBackup > 7*864e5);
+  $('#dataInfo').innerHTML = `<span>Lưu tự động lần cuối</span><b>${S.updated ? new Date(S.updated).toLocaleString('vi-VN') : 'chưa có dữ liệu'}</b>
+    <span>Tải sao lưu lần cuối</span><b class="${stale?'c-warn':''}">${ago(md.lastBackup)}</b>
+    <span>Đang có</span><b>${S.tx.length} giao dịch · ${S.goals.length} mục tiêu</b>`;
+  $('#backupTip').innerHTML = stale ? `<div class="tip backup-tip"><span>💾 ${md.lastBackup ? 'Đã ' + ago(md.lastBackup).replace(/ \(.*\)/,'') + ' bạn chưa tải bản sao lưu.' : 'Bạn chưa tải bản sao lưu nào.'} Nên tải về máy để không mất dữ liệu.</span><button class="btn sm pri" data-act="backup">Tải sao lưu</button></div>` : '';
+}
+async function exportBackup(){
+  const ok = await download(`vi-cua-toi-${stamp()}.json`, JSON.stringify({app:'vi-cua-toi', exported: new Date().toISOString(), ...S}, null, 1), 'application/json');
+  if (ok){ meta.set({lastBackup: Date.now()}); renderData(); }
+}
+$('#exportJson').addEventListener('click', exportBackup);
+$('#dataBtn').addEventListener('click', () => { go('budget'); const c = $('#dataCard'); setTimeout(() => { $('#dataSec').scrollIntoView({behavior:'smooth', block:'start'}); c.classList.remove('flash-card'); void c.offsetWidth; c.classList.add('flash-card'); }, 50); });
+/* in-app confirm dialog (window.confirm is blocked in some embedded views) */
+function ask(title, body, okLabel, opt = {}){
+  return new Promise(res => {
+    const sc = document.createElement('div'); sc.className = 'scrim ask-scrim on';
+    sc.innerHTML = `<div class="sheet" role="alertdialog" aria-modal="true"><h2>${title}</h2>${body ? `<p style="margin:0 0 14px;color:var(--muted)">${body}</p>` : ''}
+      <div class="row-btns" style="flex-wrap:wrap"><button class="btn" data-r="">Hủy</button>${opt.alt ? `<button class="btn" data-r="alt">${opt.alt}</button>` : ''}<button class="btn ${opt.danger?'danger':'pri'}" data-r="ok">${okLabel}</button></div></div>`;
+    const done = r => { sc.remove(); document.removeEventListener('keydown', key, true); res(r); };
+    const key = e => { if (e.key === 'Escape'){ e.stopPropagation(); done(null); } };
+    sc.addEventListener('click', e => { if (e.target === sc) return done(null); const b = e.target.closest('[data-r]'); if (b){ e.stopPropagation(); done(b.dataset.r || null); } });
+    document.addEventListener('keydown', key, true);
+    document.body.appendChild(sc); sc.querySelector('[data-r="ok"]').focus();
+  });
+}
 $('#exportCsv').addEventListener('click', () => {
   const q = v => '"' + String(v).replace(/"/g,'""') + '"';
   const rows = [['Ngày','Loại','Danh mục / Mục tiêu','Số tiền','Ghi chú']].concat(
@@ -812,17 +866,30 @@ $('#importFile').addEventListener('change', async e => {
     if (!d || !Array.isArray(d.tx) || !Array.isArray(d.goals)) throw 0;
     const clean = {v:1, tx: d.tx.filter(t => t && t.id && ['income','expense','saving'].includes(t.type) && isFinite(t.amount) && /^\d{4}-\d\d-\d\d$/.test(t.date)),
       goals: d.goals.filter(g => g && g.id && g.name && isFinite(g.target)), budgets: (d.budgets && typeof d.budgets === 'object') ? d.budgets : {}};
-    if (!confirm(`Nhập ${clean.tx.length} giao dịch và ${clean.goals.length} mục tiêu? Dữ liệu hiện tại sẽ bị thay thế.`)) return;
-    S = Object.assign(blank(), clean); save(); toast('Đã nhập dữ liệu');
-  } catch(err){ toast('File không hợp lệ'); }
-  e.target.value = '';
+    e.target.value = '';
+    const when = d.exported ? ' (sao lưu lúc ' + new Date(d.exported).toLocaleString('vi-VN') + ')' : '';
+    const hasData = S.tx.length || S.goals.length;
+    const r = hasData ? await ask('Khôi phục từ file sao lưu?',
+      `File có <b>${clean.tx.length} giao dịch</b> và <b>${clean.goals.length} mục tiêu</b>${esc(when)}.<br><br><b>Gộp</b>: thêm những mục chưa có, giữ nguyên dữ liệu hiện tại.<br><b>Thay thế</b>: xóa dữ liệu hiện tại (${S.tx.length} giao dịch) và dùng dữ liệu trong file.`,
+      'Thay thế', {danger:true, alt:'Gộp'}) : 'ok';
+    if (!r) return;
+    const old = S;
+    if (r === 'alt'){
+      const txIds = new Set(S.tx.map(x=>x.id)), gIds = new Set(S.goals.map(x=>x.id));
+      const addTx = clean.tx.filter(x=>!txIds.has(x.id)), addG = clean.goals.filter(x=>!gIds.has(x.id));
+      S = {...S, tx: [...S.tx, ...addTx], goals: [...S.goals, ...addG], budgets: {...clean.budgets, ...S.budgets}};
+      save(); toast(`Đã gộp ${addTx.length} giao dịch, ${addG.length} mục tiêu mới`, () => { S = old; save(); });
+    } else {
+      S = Object.assign(blank(), clean); save(); toast('Đã khôi phục dữ liệu từ file', hasData ? () => { S = old; save(); } : null);
+    }
+  } catch(err){ toast('File không hợp lệ – hãy chọn file .json đã tải từ app này'); e.target.value = ''; }
 });
-$('#resetBtn').addEventListener('click', () => {
-  if (!confirm('Xóa TOÀN BỘ giao dịch, mục tiêu và ngân sách? Không thể hoàn tác (trừ khi bạn đã xuất sao lưu).')) return;
+$('#resetBtn').addEventListener('click', async () => {
+  if (await ask('Xóa toàn bộ dữ liệu?', 'Mọi giao dịch, mục tiêu và ngân sách sẽ bị xóa. Nên tải bản sao lưu trước.', 'Xóa hết', {danger:true}) !== 'ok') return;
   const old = S; S = blank(); save(); toast('Đã xóa toàn bộ dữ liệu', () => { S = old; save(); });
 });
-$('#demoBtn').addEventListener('click', () => {
-  if (S.tx.length && !confirm('Thêm dữ liệu mẫu vào dữ liệu hiện có?')) return;
+$('#demoBtn').addEventListener('click', async () => {
+  if (S.tx.length && await ask('Thêm dữ liệu mẫu?', 'Dữ liệu mẫu sẽ được thêm vào cùng dữ liệu hiện có.', 'Thêm') !== 'ok') return;
   const now = new Date(), add = (d, type, cat, amount, note, extra) => S.tx.push({id:uid(), type, cat, amount, date: ymd(d), note, ts: d.getTime(), ...extra});
   const g1 = {id:uid(), name:'Quỹ khẩn cấp', target:30e6, deadline: ymd(new Date(now.getFullYear(), now.getMonth()+6, 1)), icon:'🛡️', created: new Date(now.getFullYear(), now.getMonth()-5, 1).getTime()};
   const g2 = {id:uid(), name:'Du lịch Đà Lạt', target:8e6, deadline: ymd(new Date(now.getFullYear(), now.getMonth()+2, 15)), icon:'🏖️', created: new Date(now.getFullYear(), now.getMonth()-3, 1).getTime()};
@@ -849,6 +916,7 @@ $('#demoBtn').addEventListener('click', () => {
 /* first run */
 render();
 if (!S.tx.length && !S.goals.length) setTimeout(() => toast('👋 Nhấn + để ghi khoản thu/chi đầu tiên'), 600);
+try { navigator.storage && navigator.storage.persist && navigator.storage.persist().catch(()=>{}); } catch(e){}
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(()=>{});
 })();
 </script>

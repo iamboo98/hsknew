@@ -25,7 +25,12 @@ Lưu ý: dữ liệu thu chi lưu trong trình duyệt của từng thiết bị
 - **Ngân sách**: hạn mức cho từng danh mục; cảnh báo khi dùng 80% và khi vượt.
 - **Mục tiêu tiết kiệm**: số tiền, hạn chót, biểu tượng; góp / rút tiền; tính số cần để dành mỗi tháng/ngày và trạng thái *đúng tiến độ / chậm tiến độ / hoàn thành*.
 - **Thời gian thực**: mọi thay đổi tự lưu và tính lại ngay; đồng bộ tức thì giữa các tab/cửa sổ đang mở; tự chuyển ngày/tháng lúc nửa đêm.
-- **Dữ liệu**: lưu trên thiết bị (localStorage). Xuất/nhập sao lưu JSON, xuất CSV mở bằng Excel. Có nút tạo dữ liệu mẫu để dùng thử.
+- **Lưu ngay sau khi nhập**: mỗi lần thêm/sửa/xóa đều tự lưu vào trình duyệt; góc trên hiện chữ **"Đã lưu"** (đổi thành "⚠️ Chưa lưu" nếu trình duyệt chặn bộ nhớ). Dữ liệu vẫn còn khi tắt app, tải lại trang hay khởi động lại máy.
+- **Tải về & tải lên lại (sao lưu / khôi phục)**: bấm nút ⬇️ trên thanh trên cùng (hoặc tab **Ngân sách → Sao lưu & khôi phục**):
+  - *Tải bản sao lưu về máy* → file `vi-cua-toi-NGÀY-GIỜ.json`.
+  - *Tải lên file sao lưu để khôi phục* → chọn **Gộp** (thêm phần chưa có, giữ dữ liệu hiện tại) hoặc **Thay thế** (dùng hoàn toàn dữ liệu trong file). Có nút *Hoàn tác* nếu chọn nhầm.
+  - App hiển thị thời điểm lưu và sao lưu gần nhất, và nhắc tải sao lưu nếu đã quá 7 ngày.
+  - Xuất thêm file CSV để mở bằng Excel. Có nút tạo dữ liệu mẫu để dùng thử.
 - Giao diện sáng/tối, tối ưu cho điện thoại.
 
 ## Cách tính
