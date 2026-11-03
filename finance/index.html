@@ -790,7 +790,14 @@ $('#themeBtn').addEventListener('click', () => {
 });
 
 /* data */
-function download(name, text, type){ const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], {type})); a.download = name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href), 1000); }
+let dlP = null;
+async function download(name, text, type){
+  if (window.claude && typeof window.claude.use === 'function'){
+    dlP ||= window.claude.use('downloads').catch(() => null);
+    const dl = await dlP;
+    if (dl){ try { await dl.save({filename: name, data: text}); toast('Đã lưu ' + name); } catch(err){ if (err && err.code !== 'declined') toast('Không lưu được file ở đây'); } return; }
+  }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], {type})); a.download = name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href), 1000); }
 $('#exportJson').addEventListener('click', () => download(`vi-cua-toi-${today()}.json`, JSON.stringify(S, null, 1), 'application/json'));
 $('#exportCsv').addEventListener('click', () => {
   const q = v => '"' + String(v).replace(/"/g,'""') + '"';
