@@ -260,7 +260,6 @@ nav.tabs .fab svg{width:26px;height:26px}
       <button class="btn full" id="exportCsv">📄 Xuất giao dịch (.csv – mở bằng Excel)</button>
       <label class="btn full" style="display:block;text-align:center">⬆️ Tải lên file sao lưu để khôi phục<input type="file" id="importFile" accept="application/json,.json" hidden></label>
       <button class="btn full" id="demoBtn">✨ Tạo dữ liệu mẫu để dùng thử</button>
-      <button class="btn full danger" id="resetBtn">🗑️ Xóa toàn bộ dữ liệu</button>
     </div>
   </section>
 </main>
@@ -883,10 +882,6 @@ $('#importFile').addEventListener('change', async e => {
       S = Object.assign(blank(), clean); save(); toast('Đã khôi phục dữ liệu từ file', hasData ? () => { S = old; save(); } : null);
     }
   } catch(err){ toast('File không hợp lệ – hãy chọn file .json đã tải từ app này'); e.target.value = ''; }
-});
-$('#resetBtn').addEventListener('click', async () => {
-  if (await ask('Xóa toàn bộ dữ liệu?', 'Mọi giao dịch, mục tiêu và ngân sách sẽ bị xóa. Nên tải bản sao lưu trước.', 'Xóa hết', {danger:true}) !== 'ok') return;
-  const old = S; S = blank(); save(); toast('Đã xóa toàn bộ dữ liệu', () => { S = old; save(); });
 });
 $('#demoBtn').addEventListener('click', async () => {
   if (S.tx.length && await ask('Thêm dữ liệu mẫu?', 'Dữ liệu mẫu sẽ được thêm vào cùng dữ liệu hiện có.', 'Thêm') !== 'ok') return;
