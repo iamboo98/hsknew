@@ -16,3 +16,9 @@ Lưu ý:
  - Tiến độ học lưu trong trình duyệt của từng người (không đồng bộ giữa các máy).
  - Nút “Claude chấm chi tiết” chỉ có khi mở app bên trong Claude; ở link riêng, phần chấm nhanh vẫn hoạt động.
  - File nghe là của bộ sách giáo trình/sách bài tập: chỉ nên chia sẻ cho người học có sách, không đăng công khai đại trà.
+
+
+-----------------------------------------------------------------
+APP QUẢN LÝ THU CHI & TIẾT KIỆM ("Ví Của Tôi") – thư mục finance/
+ - Link app (sau khi bật GitHub Pages): https://iamboo98.github.io/hsknew/finance/
+ - Hướng dẫn chi tiết: finance/HUONG-DAN.md

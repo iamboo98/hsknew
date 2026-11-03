@@ -1,6 +1,23 @@
 # Ví Của Tôi – Quản lý thu chi & tiết kiệm
 
-App web (PWA) một trang, không cần máy chủ, hoạt động offline. Mở `finance/index.html` qua một địa chỉ http(s) (Netlify Drop, GitHub Pages…) để cài lên màn hình chính.
+App web (PWA) một trang, không cần máy chủ, hoạt động offline.
+
+## Link
+- **App (GitHub Pages):** https://iamboo98.github.io/hsknew/finance/ — chỉ hoạt động sau khi bật GitHub Pages (xem bên dưới).
+- **Mã nguồn:** https://github.com/iamboo98/hsknew/tree/claude/income-expense-tracker-app-ir2l64/finance
+- **Bản xem trên Claude (riêng tư):** https://claude.ai/artifact/Cquhj7xTEfwzPfXdbFsXo7
+
+## Bật GitHub Pages
+1. Mở https://github.com/iamboo98/hsknew/settings/pages
+2. **Source** → *Deploy from a branch*.
+3. **Branch** → `main` (sau khi gộp) hoặc `claude/income-expense-tracker-app-ir2l64`, thư mục `/ (root)` → **Save**.
+4. Đợi 1–2 phút rồi mở https://iamboo98.github.io/hsknew/finance/
+
+## Cài lên điện thoại
+- **iPhone:** mở link bằng Safari → Chia sẻ → *Thêm vào MH chính*.
+- **Android:** mở bằng Chrome → menu ⋮ → *Cài đặt ứng dụng / Thêm vào màn hình chính*.
+
+Lưu ý: dữ liệu thu chi lưu trong trình duyệt của từng thiết bị, không đồng bộ giữa các máy. Dùng nút *Xuất sao lưu* / *Nhập từ file sao lưu* trong tab **Ngân sách** để chuyển dữ liệu.
 
 ## Tính năng
 - **Thu / Chi**: ghi nhanh bằng nút **+**, gõ tắt số tiền (`50k`, `1.5tr`, `2 triệu`), chọn danh mục, ngày, ghi chú. Nhấn vào giao dịch để sửa/xóa (có Hoàn tác).
