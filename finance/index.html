@@ -11,6 +11,9 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Ví Của Tôi">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Ví Của Tôi">
+<link rel="icon" href="icon-192.png" sizes="192x192" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap">
@@ -165,6 +168,28 @@ nav.tabs .fab svg{width:26px;height:26px}
 .budget-row:last-child{border-bottom:0}
 .budget-row input{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:7px 10px;text-align:right;width:100%}
 .settings-list .btn{margin-bottom:8px}
+ #splash{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:linear-gradient(160deg,#14918a,#0b4f5c);color:#fff;transition:opacity .45s ease,visibility .45s}
+#splash.out{opacity:0;visibility:hidden}
+#splash .sp-logo{width:132px;height:132px;filter:drop-shadow(0 16px 28px rgba(0,0,0,.28));animation:spIn .7s cubic-bezier(.2,1.4,.4,1) both}
+#splash .sp-logo svg{width:100%;height:100%}
+#splash .sp-name{font-size:28px;font-weight:700;letter-spacing:-.3px;animation:spUp .6s .15s ease both}
+#splash .sp-sub{font-size:14px;opacity:.85;animation:spUp .6s .25s ease both}
+@keyframes spIn{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+@keyframes spUp{from{transform:translateY(10px);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){#splash *{animation:none!important}}
+.bell{position:relative}
+.bell .badge{position:absolute;top:-5px;right:-5px;min-width:18px;height:18px;padding:0 5px;border-radius:99px;background:var(--expense);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;border:2px solid var(--bg)}
+.bell.ring svg{animation:ring 1s ease 2}
+.bell .badge[hidden]{display:none}
+@keyframes ring{0%,100%{transform:rotate(0)}20%{transform:rotate(14deg)}40%{transform:rotate(-12deg)}60%{transform:rotate(8deg)}80%{transform:rotate(-4deg)}}
+.noti{display:flex;gap:12px;padding:12px;border-radius:14px;background:var(--bg);border:1px solid var(--line);margin-bottom:8px;text-align:left;width:100%}
+.noti .ni{font-size:22px;flex:none;line-height:1.2}
+.noti .nt{font-weight:600}
+.noti .nb{font-size:13px;color:var(--muted)}
+.noti.danger{border-left:4px solid var(--expense)}.noti.warn{border-left:4px solid var(--warn)}.noti.success{border-left:4px solid var(--income)}.noti.info{border-left:4px solid var(--saving)}
+.noti.new{background:var(--accent-soft)}
+.notify-box{background:var(--surface-2);border-radius:14px;padding:12px;margin-top:12px;font-size:13px}
+@media(max-width:440px){#clock,.live .sep{display:none}}
 .save-state{font-weight:600;color:var(--income)}.save-state.err{color:var(--expense)}
 .data-info{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px;background:var(--surface-2);border-radius:12px;padding:10px 12px;margin-bottom:12px}
 .data-info b{text-align:right;font-weight:600}
@@ -193,11 +218,27 @@ nav.tabs .fab svg{width:26px;height:26px}
   <circle cx="400" cy="360" r="11" fill="#ffd76e"/>
   </g>
 </svg>Ví Của Tôi</div>
-  <div class="live" title="Dữ liệu tự lưu ngay sau mỗi lần nhập và đồng bộ giữa các tab"><span class="dot" id="liveDot"></span><span class="save-state" id="saveState">Đã lưu</span><span>·</span><span id="clock" class="num">--:--:--</span></div>
+  <div class="live" title="Dữ liệu tự lưu ngay sau mỗi lần nhập và đồng bộ giữa các tab"><span class="dot" id="liveDot"></span><span class="save-state" id="saveState">Đã lưu</span><span class="sep">·</span><span id="clock" class="num">--:--:--</span></div>
+  <button class="icon-btn bell" id="bellBtn" aria-label="Thông báo" title="Thông báo quan trọng"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="badge" id="bellBadge" hidden>0</span></button>
   <button class="icon-btn" id="dataBtn" aria-label="Sao lưu và khôi phục dữ liệu" title="Sao lưu / Khôi phục"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4-4m4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></button>
   <button class="icon-btn" id="themeBtn" aria-label="Đổi giao diện sáng/tối"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
 </div></header>
 
+<div id="splash" aria-hidden="true"><div class="sp-logo"><svg viewBox="0 0 512 512" aria-hidden="true" focusable="false">  <defs>
+    <linearGradient id="vbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14918a"/><stop offset="1" stop-color="#0b4f5c"/></linearGradient>
+    <linearGradient id="vgold" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#f0a92e"/><stop offset="1" stop-color="#ffd76e"/></linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#vbg)"/>
+  <g transform="translate(-12 -4)">
+  <!-- V rising into an arrow (gold): Ví + tăng trưởng -->
+  <path d="M128 176 L236 330 L376 150" fill="none" stroke="url(#vgold)" stroke-width="60" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M312 128 L420 106 L398 214 Z" fill="#ffd76e" stroke="#ffd76e" stroke-width="20" stroke-linejoin="round"/>
+  <!-- wallet pocket in front: the V tucks into it -->
+  <path d="M88 300 Q256 352 424 300 V386 a40 40 0 0 1 -40 40 H128 a40 40 0 0 1 -40 -40 Z" fill="#ffffff"/>
+  <path d="M376 330 h52 a22 22 0 0 1 22 22 v16 a22 22 0 0 1 -22 22 h-52 a14 14 0 0 1 -14 -14 v-32 a14 14 0 0 1 14 -14 z" fill="#0f766e" stroke="#ffffff" stroke-width="10"/>
+  <circle cx="400" cy="360" r="11" fill="#ffd76e"/>
+  </g>
+</svg></div><div class="sp-name">Ví Của Tôi</div><div class="sp-sub">Thu chi · Ngân sách · Tiết kiệm</div></div>
 <main>
   <!-- OVERVIEW -->
   <section class="view on" id="v-home">
@@ -412,7 +453,7 @@ function goalInfo(g){
 /* ---------- render ---------- */
 function render(){
   $$('.mlabel').forEach(e => e.textContent = monthLabel(ui.month));
-  renderHome(); renderTx(); renderGoals(); renderBudget(); renderData();
+  renderHome(); renderTx(); renderGoals(); renderBudget(); renderData(); renderAlerts();
 }
 
 function renderHome(){
@@ -922,11 +963,106 @@ $('#demoBtn').addEventListener('click', async () => {
   ui.month = ym(now); save(); go('home'); toast('Đã tạo dữ liệu mẫu');
 });
 
+/* ---------- important notifications ---------- */
+const LV_ORDER = {danger:0, warn:1, success:2, info:3};
+function computeAlerts(){
+  const out = [], now = new Date(), cm = ym(now), td = today(), m = txOfMonth(cm), t = totals(m);
+  const spent = {}; m.filter(x=>x.type==='expense').forEach(x => spent[x.cat] = (spent[x.cat]||0) + x.amount);
+  for (const c of CATS.expense){
+    const b = +S.budgets[c.id] || 0, sp = spent[c.id] || 0; if (!b) continue;
+    if (sp > b) out.push({id:`over:${cm}:${c.id}`, lv:'danger', ic:'🚨', title:`${c.n}: đã vượt ngân sách`, body:`Đã chi ${money(sp)} / ${money(b)} – vượt ${money(sp-b)}.`, go:'home'});
+    else if (sp >= b*.8) out.push({id:`near:${cm}:${c.id}`, lv:'warn', ic:'🔔', title:`${c.n}: đã dùng ${Math.round(sp/b*100)}% ngân sách`, body:`Chỉ còn ${money(b-sp)} đến hết tháng.`, go:'home'});
+  }
+  const tb = Object.values(S.budgets).reduce((a,b)=>a+(+b||0),0), day = now.getDate(), dim = daysIn(cm);
+  if (tb && day >= 5 && t.exp <= tb){ const proj = t.exp/day*dim; if (proj > tb*1.05) out.push({id:`proj:${cm}`, lv:'warn', ic:'📈', title:'Dự báo vượt tổng ngân sách tháng', body:`Với tốc độ hiện tại, cả tháng sẽ chi khoảng ${money(proj)} (ngân sách ${money(tb)}).`, go:'home'}); }
+  if (t.inc > 0 && t.exp > t.inc) out.push({id:`exin:${cm}`, lv:'danger', ic:'⚠️', title:'Chi tiêu tháng này vượt thu nhập', body:`Thu ${money(t.inc)} – Chi ${money(t.exp)}.`, go:'home'});
+  const bal = totals(S.tx).net;
+  if (S.tx.length && bal < 0) out.push({id:`neg:${cm}`, lv:'danger', ic:'🔴', title:'Số dư khả dụng đang âm', body:`Số dư hiện tại: ${money(bal)}.`, go:'home'});
+  for (const g of S.goals){
+    const i = goalInfo(g);
+    if (i.status === 'done'){ out.push({id:`done:${g.id}`, lv:'success', ic:'🎉', title:`Hoàn thành mục tiêu “${g.name}”`, body:`Đã để dành đủ ${money(g.target)}.`, go:'goals'}); continue; }
+    if (!g.deadline) continue;
+    if (i.daysLeft <= 0) out.push({id:`late:${g.id}:${g.deadline}`, lv:'danger', ic:'⏰', title:`Mục tiêu “${g.name}” đã quá hạn`, body:`Còn thiếu ${money(i.left)}. Hãy gia hạn hoặc góp thêm.`, go:'goals'});
+    else if (i.daysLeft <= 14) out.push({id:`soon:${g.id}:${g.deadline}`, lv:'warn', ic:'⏳', title:`“${g.name}” còn ${i.daysLeft} ngày`, body:`Còn thiếu ${money(i.left)} (≈ ${money(i.perDay)}/ngày).`, go:'goals'});
+    else if (i.status === 'late') out.push({id:`behind:${g.id}:${cm}`, lv:'warn', ic:'🐢', title:`“${g.name}” đang chậm tiến độ`, body:`Nên góp ${money(i.perMonth)} trong tháng này để kịp hạn.`, go:'goals'});
+  }
+  const md = meta.get();
+  if (S.tx.length && (!md.lastBackup || Date.now() - md.lastBackup > 7*864e5)) out.push({id:`backup:${md.lastBackup||0}:${Math.floor(Date.now()/(7*864e5))}`, lv:'info', ic:'💾', title:'Nên tải bản sao lưu', body: md.lastBackup ? `Lần sao lưu gần nhất: ${ago(md.lastBackup)}.` : 'Bạn chưa tải bản sao lưu nào về máy.', act:'backup'});
+  if (S.tx.length && now.getHours() >= 20 && !S.tx.some(x => x.date === td)) out.push({id:`daily:${td}`, lv:'info', ic:'✍️', title:'Bạn chưa ghi chi tiêu hôm nay', body:'Dành 1 phút ghi lại các khoản thu/chi trong ngày nhé.', act:'newTx'});
+  return out.sort((a,b) => LV_ORDER[a.lv] - LV_ORDER[b.lv]);
+}
+let alerts = [], lastBadge = -1;
+function renderAlerts(){
+  alerts = computeAlerts();
+  const md = meta.get(), seen = md.seen || {};
+  const unseen = alerts.filter(a => !seen[a.id]).length;
+  const bd = $('#bellBadge'); bd.hidden = !unseen; bd.textContent = unseen > 9 ? '9+' : unseen;
+  if (unseen > lastBadge && lastBadge >= 0){ const bb = $('#bellBtn'); bb.classList.remove('ring'); void bb.offsetWidth; bb.classList.add('ring'); }
+  lastBadge = unseen;
+  try { if (navigator.setAppBadge) unseen ? navigator.setAppBadge(unseen) : navigator.clearAppBadge(); } catch(e){}
+  pushSystem(alerts);
+}
+const canNotify = () => 'Notification' in window && window.isSecureContext && window.top === window.self;
+async function pushSystem(list){
+  const md = meta.get();
+  if (!md.notify || !canNotify() || Notification.permission !== 'granted') return;
+  const sent = md.notified || {}, fresh = list.filter(a => !sent[a.id]);
+  if (!fresh.length) return;
+  const keep = {}; list.forEach(a => keep[a.id] = 1);
+  meta.set({notified: keep}); // mark first so overlapping checks never send twice
+  const reg = ('serviceWorker' in navigator) ? await navigator.serviceWorker.getRegistration().catch(() => null) : null;
+  for (const a of fresh.slice(0, 3)){
+    const opt = {body: a.body, icon: 'icon-192.png', badge: 'icon-192.png', tag: a.id, lang: 'vi', data: {url: location.href.split('#')[0]}};
+    try { reg ? await reg.showNotification(a.ic + ' ' + a.title, opt) : new Notification(a.ic + ' ' + a.title, opt); } catch(e){}
+  }
+}
+function alertsSheet(){
+  const md = meta.get(), seen = md.seen || {};
+  const sup = canNotify(), perm = sup ? Notification.permission : 'unsupported', on = md.notify && perm === 'granted';
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent), standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  let box;
+  if (!sup) box = isIOS && !standalone ? '📱 Trên iPhone: hãy <b>Thêm vào MH chính</b> rồi mở app từ biểu tượng để bật thông báo trên điện thoại (iOS 16.4 trở lên).' : 'Thông báo trên điện thoại chưa dùng được ở trang này. Hãy mở app từ link đã xuất bản (GitHub Pages) hoặc biểu tượng trên màn hình chính.';
+  else if (perm === 'denied') box = '🔕 Bạn đã chặn thông báo. Mở cài đặt trình duyệt/điện thoại → Thông báo → cho phép “Ví Của Tôi”.';
+  else box = (on ? '🔔 Thông báo trên điện thoại: <b>đang bật</b>.' : '🔕 Thông báo trên điện thoại: <b>đang tắt</b>.') + ` <button class="btn sm ${on?'':'pri'}" id="nToggle" style="margin-left:6px">${on?'Tắt':'Bật thông báo'}</button><div class="small" style="margin-top:6px">Thông báo được gửi khi app đang mở hoặc chạy nền.</div>`;
+  openSheet(`<h2>Thông báo quan trọng${closeBtn}</h2>
+    ${alerts.length ? alerts.map(a => `<button class="noti ${a.lv}${seen[a.id]?'':' new'}" data-noti="${esc(a.id)}"><span class="ni">${a.ic}</span><span><div class="nt">${esc(a.title)}</div><div class="nb">${esc(a.body)}</div></span></button>`).join('')
+      : '<div class="empty">✅ Mọi thứ đều ổn – không có thông báo nào.</div>'}
+    <div class="notify-box">${box}</div>`, root => {
+    root.querySelectorAll('[data-noti]').forEach(b => b.addEventListener('click', ev => {
+      ev.stopPropagation(); const a = alerts.find(x => x.id === b.dataset.noti); closeSheet(); if (!a) return;
+      if (a.act === 'backup') exportBackup(); else if (a.act === 'newTx') txSheet(); else { ui.month = ym(new Date()); render(); go(a.go || 'home'); }
+    }));
+    const tg = root.querySelector('#nToggle');
+    tg && tg.addEventListener('click', async () => {
+      if (on){ meta.set({notify:false}); toast('Đã tắt thông báo'); return alertsSheet(); }
+      const r = await Notification.requestPermission().catch(() => 'denied');
+      if (r === 'granted'){ meta.set({notify:true, notified:{}}); toast('🔔 Đã bật thông báo'); renderAlerts(); }
+      else toast('Bạn chưa cho phép thông báo');
+      alertsSheet();
+    });
+  });
+  const all = {}; alerts.forEach(a => all[a.id] = 1); meta.set({seen: all});
+  renderAlerts();
+}
+$('#bellBtn').addEventListener('click', alertsSheet);
+setInterval(() => { if (!document.hidden || meta.get().notify) renderAlerts(); }, 60000);
+
+/* ---------- splash + launch ---------- */
+(function splash(){
+  const sp = $('#splash'); if (!sp) return;
+  const hide = () => { sp.classList.add('out'); setTimeout(() => sp.remove(), 600); };
+  let shown = false; try { shown = sessionStorage.getItem(KEY+':splash'); sessionStorage.setItem(KEY+':splash', 1); } catch(e){}
+  setTimeout(hide, shown ? 250 : 1100);
+  sp.addEventListener('click', hide);
+})();
+
 /* first run */
 render();
 if (!S.tx.length && !S.goals.length) setTimeout(() => toast('👋 Nhấn + để ghi khoản thu/chi đầu tiên'), 600);
 try { navigator.storage && navigator.storage.persist && navigator.storage.persist().catch(()=>{}); } catch(e){}
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(()=>{});
+{ const q = new URLSearchParams(location.search).get('action'); // home-screen shortcuts
+  if (q === 'add') setTimeout(() => txSheet(), 900); else if (q === 'goals') go('goals'); else if (q === 'alerts') setTimeout(alertsSheet, 900); }
 })();
 </script>
 </body>

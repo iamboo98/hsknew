@@ -33,6 +33,24 @@ Lưu ý: dữ liệu thu chi lưu trong trình duyệt của từng thiết bị
   - Xuất thêm file CSV để mở bằng Excel. Có nút tạo dữ liệu mẫu để dùng thử.
 - Giao diện sáng/tối, tối ưu cho điện thoại.
 
+## Logo trên điện thoại & màn hình chào
+- Sau khi app được xuất bản (GitHub Pages) và **cài lên màn hình chính**, biểu tượng app là logo *Ví Của Tôi*.
+- Mỗi lần mở app sẽ hiện **màn hình chào** có logo và tên app (khoảng 1 giây, chạm để bỏ qua).
+- Android: nhấn giữ biểu tượng app để mở nhanh *Thêm giao dịch*, *Mục tiêu tiết kiệm*, *Thông báo*. Số thông báo chưa đọc hiện trên biểu tượng app (khi trình duyệt hỗ trợ).
+
+## Thông báo quan trọng 🔔
+Nút chuông trên thanh trên cùng hiện số thông báo chưa đọc. App tự kiểm tra và báo khi:
+- 🚨 Một danh mục **vượt ngân sách**, hoặc 🔔 đã dùng **≥ 80%** ngân sách.
+- 📈 **Dự báo vượt tổng ngân sách** tháng theo tốc độ chi hiện tại.
+- ⚠️ **Chi vượt thu** trong tháng; 🔴 **số dư khả dụng âm**.
+- ⏳ Mục tiêu **sắp hết hạn** (≤ 14 ngày), ⏰ **quá hạn**, 🐢 **chậm tiến độ**; 🎉 **hoàn thành** mục tiêu.
+- 💾 Quá 7 ngày **chưa tải bản sao lưu**.
+- ✍️ Sau 20h mà **chưa ghi giao dịch nào trong ngày**.
+
+**Thông báo trên điện thoại:** mở chuông 🔔 → *Bật thông báo* → cho phép. Thông báo được gửi khi app đang mở hoặc chạy nền (app không có máy chủ nên không gửi được khi app đã đóng hẳn).
+- Android (Chrome): dùng được ngay trên link GitHub Pages.
+- iPhone (iOS 16.4+): phải **Thêm vào MH chính** rồi mở app từ biểu tượng mới bật được.
+
 ## Cách tính
 - Số dư khả dụng = Tổng thu − Tổng chi − Tiền đã chuyển vào mục tiêu.
 - Tài sản ròng = Số dư khả dụng + Tổng đã để dành.

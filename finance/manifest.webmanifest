@@ -1,15 +1,25 @@
 {
+ "id": "./",
  "name": "Ví Của Tôi – Quản lý thu chi & tiết kiệm",
  "short_name": "Ví Của Tôi",
+ "description": "Quản lý thu nhập, chi tiêu, ngân sách và mục tiêu tiết kiệm theo thời gian thực.",
  "start_url": "./",
  "scope": "./",
  "display": "standalone",
- "background_color": "#f3f5f4",
+ "orientation": "portrait",
+ "background_color": "#0b4f5c",
  "theme_color": "#0f766e",
  "lang": "vi",
+ "categories": ["finance", "productivity"],
  "icons": [
-  {"src": "icon.svg", "sizes": "any", "type": "image/svg+xml"},
-  {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
-  {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+  {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+  {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"},
+  {"src": "icon.svg", "sizes": "any", "type": "image/svg+xml"}
+ ],
+ "shortcuts": [
+  {"name": "Thêm giao dịch", "short_name": "Thêm", "url": "./?action=add", "icons": [{"src": "icon-192.png", "sizes": "192x192"}]},
+  {"name": "Mục tiêu tiết kiệm", "short_name": "Tiết kiệm", "url": "./?action=goals", "icons": [{"src": "icon-192.png", "sizes": "192x192"}]},
+  {"name": "Thông báo", "url": "./?action=alerts", "icons": [{"src": "icon-192.png", "sizes": "192x192"}]}
  ]
 }
