@@ -37,3 +37,10 @@ Lưu ý: dữ liệu thu chi lưu trong trình duyệt của từng thiết bị
 - Số dư khả dụng = Tổng thu − Tổng chi − Tiền đã chuyển vào mục tiêu.
 - Tài sản ròng = Số dư khả dụng + Tổng đã để dành.
 - Tỷ lệ tiết kiệm tháng = (Thu − Chi) / Thu.
+
+## Logo
+Logo riêng của app: chiếc **ví** màu trắng với chữ **V** (Ví) màu vàng vút lên thành **mũi tên tăng trưởng**, nghĩa là tiền vào ví và tài chính đi lên.
+- File gốc dạng vector: `finance/icon.svg` (phóng to bao nhiêu cũng nét).
+- Ảnh PNG: `finance/icon-512.png`, `icon-192.png`, `icon-180.png`.
+- Bảng nhận diện (logo, cách ghép với tên app, mã màu): `finance/logo-preview.png`.
+- Màu chính: Teal `#14918a`, Deep teal `#0b4f5c`, Gold `#ffd76e`, Amber `#f0a92e`, White `#ffffff`.

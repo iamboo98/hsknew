@@ -1,4 +1,4 @@
-const C = 'vi-cua-toi-v1';
+const C = 'vi-cua-toi-v2';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-180.png'];
 self.addEventListener('install', e => { self.skipWaiting(); e.waitUntil(caches.open(C).then(c => c.addAll(ASSETS))); });
 self.addEventListener('activate', e => e.waitUntil(

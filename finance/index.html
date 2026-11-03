@@ -46,7 +46,7 @@ button{cursor:pointer}
 header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 10px}
 .top-in{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:10px}
 .brand{font-weight:700;font-size:17px;display:flex;align-items:center;gap:8px}
-.brand svg{width:26px;height:26px}
+.brand svg{width:30px;height:30px;flex:none}
 .live{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--income);box-shadow:0 0 0 0 var(--income);animation:pulse 2s infinite}
 .dot.flash{background:var(--saving);box-shadow:0 0 0 0 var(--saving)}
@@ -178,7 +178,21 @@ nav.tabs .fab svg{width:26px;height:26px}
 </head>
 <body>
 <header class="top"><div class="top-in">
-  <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0f766e"/><path d="M14 22a6 6 0 0 1 6-6h22a4 4 0 0 1 4 4v4H20a2 2 0 0 0 0 4h30a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4H20a6 6 0 0 1-6-6z" fill="#fff"/><circle cx="44" cy="38" r="4" fill="#0f766e"/></svg>Ví Của Tôi</div>
+  <div class="brand"><svg viewBox="0 0 512 512" aria-hidden="true">  <defs>
+    <linearGradient id="vbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14918a"/><stop offset="1" stop-color="#0b4f5c"/></linearGradient>
+    <linearGradient id="vgold" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#f0a92e"/><stop offset="1" stop-color="#ffd76e"/></linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#vbg)"/>
+  <g transform="translate(-12 -4)">
+  <!-- V rising into an arrow (gold): Ví + tăng trưởng -->
+  <path d="M128 176 L236 330 L376 150" fill="none" stroke="url(#vgold)" stroke-width="60" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M312 128 L420 106 L398 214 Z" fill="#ffd76e" stroke="#ffd76e" stroke-width="20" stroke-linejoin="round"/>
+  <!-- wallet pocket in front: the V tucks into it -->
+  <path d="M88 300 Q256 352 424 300 V386 a40 40 0 0 1 -40 40 H128 a40 40 0 0 1 -40 -40 Z" fill="#ffffff"/>
+  <path d="M376 330 h52 a22 22 0 0 1 22 22 v16 a22 22 0 0 1 -22 22 h-52 a14 14 0 0 1 -14 -14 v-32 a14 14 0 0 1 14 -14 z" fill="#0f766e" stroke="#ffffff" stroke-width="10"/>
+  <circle cx="400" cy="360" r="11" fill="#ffd76e"/>
+  </g>
+</svg>Ví Của Tôi</div>
   <div class="live" title="Dữ liệu tự lưu ngay sau mỗi lần nhập và đồng bộ giữa các tab"><span class="dot" id="liveDot"></span><span class="save-state" id="saveState">Đã lưu</span><span>·</span><span id="clock" class="num">--:--:--</span></div>
   <button class="icon-btn" id="dataBtn" aria-label="Sao lưu và khôi phục dữ liệu" title="Sao lưu / Khôi phục"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4-4m4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></button>
   <button class="icon-btn" id="themeBtn" aria-label="Đổi giao diện sáng/tối"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>

@@ -1,1 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f766e"/><stop offset="1" stop-color="#155e75"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#g)"/><path d="M14 22a6 6 0 0 1 6-6h22a4 4 0 0 1 4 4v4H20a2 2 0 0 0 0 4h30a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4H20a6 6 0 0 1-6-6z" fill="#fff"/><circle cx="44" cy="38" r="4" fill="#0f766e"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <title>Ví Của Tôi</title>
+  <defs>
+    <linearGradient id="vbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14918a"/><stop offset="1" stop-color="#0b4f5c"/></linearGradient>
+    <linearGradient id="vgold" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#f0a92e"/><stop offset="1" stop-color="#ffd76e"/></linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#vbg)"/>
+  <g transform="translate(-12 -4)">
+  <!-- V rising into an arrow (gold): Ví + tăng trưởng -->
+  <path d="M128 176 L236 330 L376 150" fill="none" stroke="url(#vgold)" stroke-width="60" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M312 128 L420 106 L398 214 Z" fill="#ffd76e" stroke="#ffd76e" stroke-width="20" stroke-linejoin="round"/>
+  <!-- wallet pocket in front: the V tucks into it -->
+  <path d="M88 300 Q256 352 424 300 V386 a40 40 0 0 1 -40 40 H128 a40 40 0 0 1 -40 -40 Z" fill="#ffffff"/>
+  <path d="M376 330 h52 a22 22 0 0 1 22 22 v16 a22 22 0 0 1 -22 22 h-52 a14 14 0 0 1 -14 -14 v-32 a14 14 0 0 1 14 -14 z" fill="#0f766e" stroke="#ffffff" stroke-width="10"/>
+  <circle cx="400" cy="360" r="11" fill="#ffd76e"/>
+  </g>
+</svg>
+
